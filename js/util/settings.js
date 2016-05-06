@@ -1,6 +1,9 @@
 define([], function () {
 	var Settings = function () {
 		this.restURL = 'http://localhost:3001';
+		
+		this.locationDefault = 'en';
+
 		this.apiData = {
 			  application:'CMS_PUBLIC'
 			, key:'Aer!04LosERP20167'
@@ -28,20 +31,23 @@ define([], function () {
 	    	var d = new Date();
 	      	d.setTime(d.getTime() + 600000); // 10 Minu
 	      	var expires = "expires="+d.toUTCString();
-	      	document.cookie = "phronos=" + JSON.stringify(data) + "; " + expires;
+	      	document.cookie = "cronosCMS=" + JSON.stringify(data) + "; " + expires;
 	    },
   		getDataSession:function(){
-	      	var name = "phronos=";
+	      	var name = "cronosCMS=";
 	      	var ca = document.cookie.split(';');
 	      	for(var i=0; i<ca.length; i++) {
 	        	var c = ca[i];
 	          	while (c.charAt(0)==' ') c = c.substring(1);
-	          	if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+	          	if (c.indexOf(name) == 0) {
+	          		
+	          		return JSON.parse(c.substring(name.length,c.length));
+	          	}
 	      	}
 	      	return "";
 	    },
 	    deleteDataSession:function(){
-	    	document.cookie = 'phronos=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	    	document.cookie = 'cronosCMS=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 	    },
 	   	responseError:function(code){
 	      var response;

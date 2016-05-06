@@ -1,13 +1,14 @@
 define([
-    'jQuery',
-    'Underscore',
-    'Backbone',
-    'router.cms',
-    'models/account',
-    'text!html/login.page'
-], function($, _, Backbone, AppRouter, Account, templateLogin){
+    'jquery',
+    'underscore',
+    'backbone',
+    'settings',
+    'router.cronos',
+    'text!html/login.html'
+], function($, _, Backbone, Settings, AppRouter, templateLogin){
     var View = Backbone.View.extend({
         el: $('body'),
+        template: _.template(templateLogin),
         events: {
             "click #btn-login": "onEnter",
             "keypress :input": "logKey"
@@ -18,15 +19,21 @@ define([
         },
         initialize: function(){
             this.router = new AppRouter.initialize();
+            this.sessionData = Settings.getDataSession();
         },
         render: function(){
-            this.$el.html(templateLogin);
-            $("#mssg-box").hide();
+
+
+            this.$el.html(this.template({name:'Jefferson Ortiz'}));
+
+            console.log(this.sessionData);
+
+            //$("#mssg-box").hide();
         },
         onEnter:function(ev){
             ev.preventDefault();
 
-            var selfClass = this;
+            /*var selfClass = this;
 
             $("#btn-login").button('loading');
 
@@ -77,10 +84,10 @@ define([
             } else {
                 $("#btn-login").button('reset');
                 selfClass.onShowErrorMessage(mssages);
-            }
+            }*/
         },
         onShowErrorMessage:function(message){
-            var selfClass = this;
+            /*var selfClass = this;
             $("#mssg-box").show();
             $("#mssg-box").append("<div id='list-messages'><strong>Error!</strong><ul>"+message+"</ul></div>");
 
@@ -90,7 +97,7 @@ define([
                 $("#btn-login").button('reset');
 
                 clearInterval(timer);                    
-            },2000);
+            },2000);*/
         }
     });
     return new View();
