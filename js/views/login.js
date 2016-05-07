@@ -22,12 +22,13 @@ define([
             this.sessionData = Settings.getDataSession();
         },
         render: function(){
+            var page = this;
 
-
-            this.$el.html(this.template({name:'Jefferson Ortiz'}));
-
-            console.log(this.sessionData);
-
+            require(["json!location/"+this.sessionData.location+'.json'], function(Location) {
+                var fields = Location.loginPage;
+                //fieldLocation.name = 'Jefferson Ortiz';
+                page.$el.html(page.template(fields));
+            });
             //$("#mssg-box").hide();
         },
         onEnter:function(ev){

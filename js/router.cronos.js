@@ -16,14 +16,18 @@ define([
         //TODO: Validate session user
         Settings.setDataSession({location:Settings.locationDefault});
         router.navigate("page/" + Settings.locationDefault + '/login', true);
-
     });
 
     router.on("route:loadPage", function(location, page) {
         // TODO: Validate correct location
         var sessionData = Settings.getDataSession();
-        sessionData.location = location;
-        Settings.setDataSession(sessionData);
+
+        if(sessionData instanceof Object){
+            sessionData.location = location;
+            Settings.setDataSession(sessionData);
+        } else {
+            Settings.setDataSession({location:Settings.locationDefault});
+        }
 
         //TODO: Validate session user
         if(page == 'login'){

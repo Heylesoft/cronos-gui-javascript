@@ -6,6 +6,7 @@ require.config({
     	backbone: 'libs/backbone/backbone-min',
     	uploadifive: 'libs/uploadifive/jquery.uploadifive.min',
     	settings: 'util/settings',
+        json:'json',
         html: '../html'
     }
 });
