@@ -2,10 +2,14 @@ define([
     'jquery',
     'underscore',
     'backbone',
+    'bootstrap',
     'settings',
     'router.cronos',
+    'views/components/messages/messages',
+    'models/message',
+    'models/user',
     'text!html/login.html'
-], function($, _, Backbone, Settings, AppRouter, templateLogin){
+], function($, _, Backbone, Bootstrap, Settings, AppRouter, MessagesView, MessageModel, UserModel, templateLogin){
     var View = Backbone.View.extend({
         el: $('body'),
         template: _.template(templateLogin),
@@ -13,92 +17,63 @@ define([
             "click #btn-login": "onEnter",
             "keypress :input": "logKey"
         },
-        logKey: function(e) {
-            if(e.keyCode == 13)
-                this.onEnter();
+        logKey: function(ev) {
+            if(ev.keyCode == 13)
+                this.onEnter(ev);
         },
         initialize: function(){
             this.router = new AppRouter.initialize();
-            this.sessionData = Settings.getDataSession();
+            this.sessionData = Settings.getDataSession();    
         },
         render: function(){
             var page = this;
-
-            require(["json!location/"+this.sessionData.location+'.json'], function(Location) {
-                var fields = Location.loginPage;
-                //fieldLocation.name = 'Jefferson Ortiz';
-                page.$el.html(page.template(fields));
+            require(["json!location/login/"+this.sessionData.location+'.json'], function(LocationParameters) {
+                page.formParameters = LocationParameters;
+                page.$el.html(page.template(LocationParameters));
+                page.$el.css('background-color', '#F7F7F7');
+                page.messagesList = new MessagesView({el:$("#messages-alert", page.$el)});
             });
-            //$("#mssg-box").hide();
         },
         onEnter:function(ev){
             ev.preventDefault();
 
-            /*var selfClass = this;
+            var page = this;
 
-            $("#btn-login").button('loading');
-
-            var login = $("#txt-login").val();
-            var password = $("#txt-password").val();
+            var login = $("#txt-user").val();
+            var password = $("#txt-pass").val();
             var isComplete = true;
-            var mssages = "";
 
             if(login == ""){
-                mssages += '<li>The "Username" field is required.</li>';
+                this.messagesList.addMessage('danger', new MessageModel({title:'Error', value:page.formParameters.fieldusernameRequired}));
                 isComplete = false;
             }
             
             if(password == ""){
-                mssages +=  '<li>The "Password" field is required.</li>';
+                this.messagesList.addMessage('danger', new MessageModel({title:'Error', value:page.formParameters.fieldpasswordRequired}));
                 isComplete = false;
             }
             
             if(isComplete){
-                var account = new Account();
-                account.set('login', login);
-                account.set('password', password);
-                account.login();
+                var user = new UserModel();
+                user.set('login', login);
+                user.set('password', password);
+                user.set('location', this.sessionData.location);
+                user.login();
 
-                account.responseSuccess(function(response){
-                    if(typeof response.code == 'number'){
-                        switch(response.code){
-                            case 201:
-                                mssages = '<li>The password is incorrect.</li>';
-                                selfClass.onShowErrorMessage(mssages);
-                            break;
-
-                            case 202:
-                                mssages = '<li>The data is incorrect.</li>';
-                                selfClass.onShowErrorMessage(mssages);
-                            break;
-                        }
+                user.responseSuccess(function(status, response){
+                    if(status == Settings.responseServiceTypes.ERROR){
+                        page.messagesList.addMessage('danger', new MessageModel({title:'Error', value:response}));
                     } else {
-                        selfClass.router.navigate("page/main", true);
+                        //page.router.navigate("page/main", true);
                     }
                 });
 
-                account.responseError(function(response){
+                user.responseError(function(response, code){
                     require(["views/error"], function(ErrorPage) {
-                        ErrorPage.render('code:' + response.code + '</br>message: ' + response.error);
+                        ErrorPage.render('code:' + code + '</br>message: ' + response);
                     });
                 });
-            } else {
-                $("#btn-login").button('reset');
-                selfClass.onShowErrorMessage(mssages);
-            }*/
-        },
-        onShowErrorMessage:function(message){
-            /*var selfClass = this;
-            $("#mssg-box").show();
-            $("#mssg-box").append("<div id='list-messages'><strong>Error!</strong><ul>"+message+"</ul></div>");
-
-            var timer = setInterval(function(){
-                $("#mssg-box", selfClass.el).hide();
-                $("#list-messages").remove();
-                $("#btn-login").button('reset');
-
-                clearInterval(timer);                    
-            },2000);*/
+            }
         }
     });
     return new View();

@@ -1,0 +1,10 @@
+{
+	"title":"Sign in to continue to CronosCMS",
+	"fieldusername":"Email",
+	"fieldusernameRequired":"The 'Email' field is required.",
+	"fieldpassword":"Password",
+	"fieldpasswordRequired":"The 'Password' field is required.",
+	"buttonenter":"Log in",
+	"buttonlostpassword":"Lost your password?",
+	"terms":"©2016 All Rights Reserved. <a href='http://www.heylesoft.com' >Heylesoft</a><br /><a href='#'>Privacy and Terms</a>"
+}

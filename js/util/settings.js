@@ -1,28 +1,19 @@
 define([], function () {
 	var Settings = function () {
-		this.restURL = 'http://localhost:3001';
-		
+		this.restURL = 'http://127.0.0.1/cronos';
+		this.keyAPI = '4wcgw04k0scgck0wwwkk44kwc8os84w88g004ss4';
+		this.idIdentification = 'id';
 		this.locationDefault = 'en';
 
-		this.apiData = {
-			  application:'CMS_PUBLIC'
-			, key:'Aer!04LosERP20167'
-		};
-
-		this.errors = {
-		      e100:{error:'SYSTEM_API_ERROR',code:100}
-		    , e101:{error:'IMCOMPLETE_PARAMETERS',code:101}
-		    , e102:{error:'DOMAIN_IS_NOT_VALID', code:102}
-		    , e103:{error:'NO_DATA_RESULT', code:103}
-		    , e104:{error:'DONT_HAVE_API_KEY_PARAMETERS', code:104}
-		    , e201:{error:'INVALID_PASSWORD',code:201}
-		    , e202:{error:'INCORRECT_LOGIN',code:202}
-		    , e204:{error:'ERROR_TO_DELETE',code:204}
+		this.responseStatus = {
+		      E400:{error:'HTTP_BAD_REQUEST',code:400}
+		    , E500:{error:'HTTP_INTERNAL_SERVER_ERROR',code:500}
+		    , E200:{error:'HTTP_OK', code:200}
 		}
 
 		this.responseServiceTypes = {
-      		  SUCCESS:'success'
-    		, ERROR: 'error'
+      		  SUCCESS:true
+    		, ERROR: false
   		}
 	}
 
@@ -49,31 +40,31 @@ define([], function () {
 	    	document.cookie = 'cronosCMS=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 	    },
 	   	responseError:function(code){
-	      var response;
+	    	var response;
 
-	      switch(code){
-	        case 100:
-	          response = this.errors.e100;
-	        break;
+	      	switch(code){
+	        	case 100:
+	          		response = this.errors.e100;
+	        	break;
 
-	        case 101:
-	          response = this.errors.e101;
-	        break;
+	        	case 101:
+	          		response = this.errors.e101;
+	        	break;
 
-	        case 102:
-	          response = this.errors.e102;
-	        break;
+	        	case 102:
+	          		response = this.errors.e102;
+	        	break;
 
-	        case 104:
-	          response = this.errors.e102;
-	        break;
+	        	case 104:
+	          		response = this.errors.e102;
+	        	break;
 
-	        default:
-	          response = this.errors.e100;
-	        break;
-	      }
+	        	default:
+	          		response = this.errors.e100;
+	        	break;
+	      	}
 
-	      return response;
+	      	return response;
 	    }
 	}
 

@@ -1,0 +1,10 @@
+{
+	"title":"Acceder para continuar a CronosCMS",
+	"fieldusername":"Correo Electronico",
+	"fieldusernameRequired":"El campo 'Correo Electronico' es requerido.",
+	"fieldpassword":"Contraseña",
+	"fieldpasswordRequired":"El campo 'Contraseña' es requerido.",
+	"buttonenter":"Acceder",
+	"buttonlostpassword":"¿Olvidaste tu contraseña?",
+	"terms":"©2016 Todos los derechos reservados. <a href='http://www.heylesoft.com' >Heylesoft</a><br /><a href='#'>Terminos & Condiciones</a>"
+}
