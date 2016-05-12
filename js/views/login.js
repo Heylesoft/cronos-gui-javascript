@@ -39,6 +39,11 @@ define([
 
             var page = this;
 
+            var hideMessages = setInterval(function(){ 
+                page.messagesList.clearMessages();
+                clearInterval(hideMessages);
+            }, 4000);
+
             var login = $("#txt-user").val();
             var password = $("#txt-pass").val();
             var isComplete = true;
@@ -52,7 +57,7 @@ define([
                 this.messagesList.addMessage('danger', new MessageModel({title:'Error', value:page.formParameters.fieldpasswordRequired}));
                 isComplete = false;
             }
-            
+
             if(isComplete){
                 var user = new UserModel();
                 user.set('login', login);
@@ -73,7 +78,7 @@ define([
                         ErrorPage.render('code:' + code + '</br>message: ' + response);
                     });
                 });
-            }
+            } 
         }
     });
     return new View();

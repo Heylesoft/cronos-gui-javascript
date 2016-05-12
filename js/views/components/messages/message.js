@@ -8,8 +8,11 @@ define([
     	tagName:'div',
     	className:'alert alert-dismissible fade in',
     	template: _.template(templateMessage),
+        id:"",
     	render:function(type){
     		this.$el.html(this.template(this.model.attributes));
+            this.id = "message-" + new Date().getTime();
+            this.$el.attr("id", this.id);
 
     		switch(type){
     			case 'success':
@@ -30,7 +33,10 @@ define([
     		}
 
     		return this;
-    	}
+    	},
+        close:function(){
+            this.$el.alert('close');
+        }
     });
    	
    	return MessageComponent;
