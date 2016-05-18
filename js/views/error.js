@@ -8,6 +8,7 @@ define([
         el: $('body'),
         render: function(message){
             this.$el.html(ErrorPage);
+            this.$el.addClass('nav-md');
             $("#msg").html(message);
         }
     });

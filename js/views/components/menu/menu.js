@@ -1,10 +1,9 @@
 define([
-    'jQuery',
-    'Underscore',
-    'Backbone',
-    'router.cms',
-    'models/account',
-    'text!html/menu.component'
+    'jquery',
+    'underscore',
+    'backbone',
+    'router.cronos',
+    'text!html/menu.html'
 ], function($, _, Backbone, AppRouter, Account, menuComponent){
     var MenuComponent = Backbone.View.extend({
         events:{

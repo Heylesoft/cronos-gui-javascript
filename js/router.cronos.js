@@ -35,6 +35,12 @@ define([
                 LoginPage.render();
             });
         }
+
+        if(page == 'main'){
+            require(["views/main"], function(MainPage) {
+                MainPage.render();
+            });
+        }
     });
 
     Backbone.history.start();

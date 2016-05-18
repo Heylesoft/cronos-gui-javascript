@@ -69,7 +69,7 @@ define([
                     if(status == Settings.responseServiceTypes.ERROR){
                         page.messagesList.addMessage('danger', new MessageModel({title:'Error', value:response}));
                     } else {
-                        //page.router.navigate("page/main", true);
+                        page.router.navigate("page/"+this.sessionData.location+"/main", true);
                     }
                 });
 
